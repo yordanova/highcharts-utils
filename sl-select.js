@@ -3,12 +3,12 @@
 const AppySelectStore = {};
 let AppyMultiIndex = 0;
 
-/* @Props
-    multiple: boolean
-    selector: string
-    options: <label, value>[]
-    onChange: fn
-*/
+/**
+  * @param multiple: boolean
+  * @param selector: string
+  * @param options: {label, value}[]
+  * @param onChange: fn
+  */
 
 const selectFactoryAdd = (multiple, selector, options, onChange) => {
     if(!options.length) {
