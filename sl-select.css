@@ -85,10 +85,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: -moz-calc(100% - 40px);
-    width: -webkit-calc(100% - 40px);
-    width: -o-calc(100% - 40px);
-    width: calc(100% - 40px);
+    padding-right: 40px;
 }
 .multi__dropdown ul li:hover {
     background-color: #f2f2f2;
