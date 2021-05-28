@@ -1,0 +1,8 @@
+{
+    "packageManager": "github",
+    "name": "sl-select",
+    "repo": "yordanova/sl-select",
+    "files": {
+      "include": ["sl-select.css", "sl-select.js"]
+    }
+  }
