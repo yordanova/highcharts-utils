@@ -111,6 +111,15 @@ document.addEventListener('click', (e) => {
     });
 });
 
+// if iframe add event listener to parent
+if(parent) {
+    $(document).add(parent.document).mouseup(function(e) {
+        document.querySelectorAll('.multi').forEach((el) => {
+            el.classList.remove('opened');
+        });
+    });
+}
+
 window.selectFactory = {
     add (multiple, selector, options, onChange) {
         selectFactoryAdd(multiple, selector, options, onChange);
