@@ -4,7 +4,7 @@
     proceed.apply(this, Array.prototype.slice.call(arguments, 1));
     var chart = this;
     var isReversed = !!chart.legend.options.reverseClick;
-    
+    console.log
     chart.update({
       chart: {
         __visibleSeries: []
@@ -22,6 +22,7 @@
           series:{
             events: {
               legendItemClick: function (e) {
+                console.log(123)
                 e.preventDefault();
                 var index = -1;
                 var chart = this.chart;
