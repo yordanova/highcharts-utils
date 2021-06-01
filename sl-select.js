@@ -113,7 +113,7 @@ document.addEventListener('click', (e) => {
 
 // if iframe add event listener to parent
 if(parent) {
-    $(document).add(parent.document).mouseup(function(e) {
+    parent.document.addEventListener('click', function(e) {
         document.querySelectorAll('.multi').forEach((el) => {
             el.classList.remove('opened');
         });
