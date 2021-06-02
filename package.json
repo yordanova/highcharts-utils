@@ -1,0 +1,19 @@
+{
+  "name": "highcharts-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sl-select.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yordanova/highcharts-utils.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yordanova/highcharts-utils/issues"
+  },
+  "homepage": "https://github.com/yordanova/highcharts-utils#readme"
+}
