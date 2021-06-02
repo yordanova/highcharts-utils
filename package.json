@@ -7,7 +7,7 @@
     "run": "npm run git",
     "minify": "npm run minify1 & npm run minify2 & npm run minify3",
     "minify1": "uglifyjs sl-select.js --compress --mangle --warn --output dist/sl-select.min.js",
-    "minify2": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.js.min.js",
+    "minify2": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.min.js",
     "minify3": "uglifyjs common.js --compress --mangle --warn --output dist/common.min.js",
     "git": "git commit && git push --all",
     "postgit": "git push --all",
