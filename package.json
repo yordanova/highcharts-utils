@@ -4,8 +4,8 @@
   "description": "",
   "main": "sl-select.js",
   "scripts": {
+    "publish": "npm run minify & npm run git",
     "start": "live-server --port=7001",
-    "main": "npm run git",
     "minify": "npm run minify1 & npm run minify2 & npm run minify3",
     "minify1": "uglifyjs sl-select.js --compress --mangle --warn --output dist/sl-select.min.js",
     "minify2": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.min.js",
