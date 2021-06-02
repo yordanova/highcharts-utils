@@ -8,46 +8,116 @@ let AppyMultiIndex = 0;
   * @param selector: string
   * @param options: {label, value}[]
   * @param onChange: fn
+  * @param defaultLabel: string
   */
 
-const selectFactoryAdd = (multiple, selector, options, onChange) => {
+const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
     if(!options.length) {
         options = [{ value: '', label: ''}];
     }
-    
-    const changeMultiSelections = (optionEl, label) => {
-        if (AppySelectStore[key].includes(label)) {
-            AppySelectStore[key].splice(AppySelectStore[key].indexOf(label), 1);
-            optionEl.classList.remove('selected');
-        } else {
-            AppySelectStore[key].push(label);
-            optionEl.classList.add('selected');
+    const selectOption = (el) => {
+        const value = el.innerText;
+        const idx = AppySelectStore[key].indexOf(value);
+        if(idx === -1) {
+            AppySelectStore[key].push(value);
         }
-        updateContainer(AppySelectStore[key]);
+        el.classList.add('selected');
     }
 
-    const changeSingleSelections = (optionEl, label) => {
-        if (AppySelectStore[key].includes(label)) {
+    const removeOption = (el) => {
+        const value = el.innerText;
+        const idx = AppySelectStore[key].indexOf(value);
+        if (idx > -1) {
+            AppySelectStore[key].splice(idx, 1);
+        }
+        el.classList.remove('selected');
+    }
+
+    const changeMultiSelection = (el) => {
+        const value = el.innerText;
+        const idx = AppySelectStore[key].indexOf(value);
+        if (idx == -1) {
+            selectOption(el)
+        } else {
+            removeOption(el);
+        }
+        updateMultiContainer();
+    }
+
+    const toggleSelectAll = (select, doNotDispatchChange) => {
+        container.querySelectorAll('li')
+            .forEach(el => {
+                if(el.id !== 'selectAll') {
+                    if(!select) {
+                        removeOption(el);
+                    }
+                    else selectOption(el);
+                } 
+            });
+        updateMultiContainer(doNotDispatchChange);
+    }
+
+    const updateMultiContainer = (doNotDispatchChange) => {
+        const selected = AppySelectStore[key];
+        inner.querySelector('i').innerText = selected.length  || '';
+
+        const sli = container.querySelector("#selectAll");
+        if(options.length === selected.length) {
+            sli.classList.add('selected');
+        } else {
+            sli.classList.remove('selected')
+        }
+
+        container.value = selected;
+        if(!doNotDispatchChange) {
+            container.dispatchEvent(new window.Event('change', { bubbles: true }));
+        }
+    }
+
+    const changeSingleSelections = (el) => {
+        const value = el.innerText;
+        if (AppySelectStore[key].includes(value)) {
             AppySelectStore[key] = undefined;
         } else {
-            AppySelectStore[key] = label;
+            AppySelectStore[key] = value;
         }
         container.classList.remove('opened')
-        updateContainer(AppySelectStore[key]);
-    }
-
-    const changeSelections = multiple ? changeMultiSelections : changeSingleSelections;
-    
-    const updateContainer = (selected) => {
+        const selected = AppySelectStore[key];
         if (selected.length > 0) {
             container.value = selected;
-            inner.innerText = multiple ? selected.join(', ') : selected;
+            inner.innerText = selected;
         } else {
             container.value = '';
             inner.innerText = options[0].label;
         }
         container.dispatchEvent(new window.Event('change', { bubbles: true }));
-    };
+    }
+
+    const createOption = (value)=> {
+        const li = document.createElement('li');
+        li.innerText = value;
+        li.setAttribute('data-value', value);
+        li.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(multiple) {
+                changeMultiSelection(e.target)
+            }
+            else changeSingleSelections(e.target)
+        });
+        return li;
+    }
+
+    const createSelectAllOption = () => {
+        const li = document.createElement('li');
+        li.innerText = 'Select All';
+        li.id = 'selectAll';
+        li.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const allSelected = e.target.classList.contains('selected');
+            toggleSelectAll(!allSelected);
+        });
+        return li;
+    }
     
     // stores values of dropdown
     AppySelectStore[AppyMultiIndex] = [];
@@ -60,33 +130,24 @@ const selectFactoryAdd = (multiple, selector, options, onChange) => {
     // create inner (displays the values)
     const inner = document.createElement('div');
     inner.classList.add('multi__inner');
-    inner.innerText = options[0].label;
+    inner.innerHTML = multiple ? `<span>${defaultLabel}<i></i></span>` : options[0].label;
 
     const display = document.createElement('button');
     container.appendChild(display);
     display.appendChild(inner);
 
-    // add to parent
-    const parent = document.querySelector(selector);
-    parent.appendChild(container);
-
     // create dropdown
     const dropdown = document.createElement('div');
     dropdown.classList.add('multi__dropdown');
 
-    // create ul
+    // create list
     const list = document.createElement('ul');
-    for (let i = 1; i < options.length; i++) {
-        const li = document.createElement('li');
-        li.innerText = options[i].label;
-        
-        li.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const label = e.target.innerText;
-            changeSelections(e.target, label)
-        });
-        list.appendChild(li);
+    if(multiple) {
+        list.appendChild(createSelectAllOption())
     }
+    options.forEach(option => {
+        list.appendChild(createOption(option.label));
+    });
 
     container.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -101,7 +162,9 @@ const selectFactoryAdd = (multiple, selector, options, onChange) => {
 
     container.appendChild(dropdown);
     dropdown.appendChild(list);
+    toggleSelectAll(true, true);
     AppyMultiIndex ++;
+    return container;
 };
 
 // add event listener to window
@@ -121,7 +184,10 @@ if(parent) {
 }
 
 window.selectFactory = {
-    add (multiple, selector, options, onChange) {
-        selectFactoryAdd(multiple, selector, options, onChange);
+    createMulti (options, onChange, defaultLabel) {
+        return selectFactoryAdd(true, options, onChange, defaultLabel);
+    },
+    createSingle (options, onChange, defaultLabel) {
+        return selectFactoryAdd(false, options, onChange, defaultLabel);
     }
 };

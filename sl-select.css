@@ -1,6 +1,6 @@
 .multi button {
     overflow: hidden;
-    padding: .375rem .75rem;
+    padding: 10px;
     line-height: 1.5;
     font-size: 1rem;
     border-radius: .25%;
@@ -36,7 +36,6 @@
 .multi.opened button::after {
     transform: rotate(135deg) translateY(-2px);
 }
-
 .multi__inner {
     overflow: hidden;
     white-space: nowrap;
@@ -45,6 +44,25 @@
     width: -webkit-calc(100% - 40px);
     width: -o-calc(100% - 40px);
     width: calc(100% - 40px);
+}
+.multi__inner i {
+    width: 22px;
+    height: 18px;
+    border-radius: 3px;
+    background: #aeaeae;
+    color: white;
+    display: block;
+    position: absolute;
+    right: 40px;
+    top: 10px;
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+}
+.multi__inner i:empty {
+    display: none;
 }
 .multi__dropdown {
     padding: 0;
@@ -106,6 +124,11 @@
     content: " ";
     right: 20px;
     transform: rotate(-45deg);
+}
+
+
+.multi__dropdown ul li#selectAll {
+    border-bottom: 1px #e9e9e9 solid;
 }
 
 .multi button:hover {
