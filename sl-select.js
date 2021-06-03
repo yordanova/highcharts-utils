@@ -11,7 +11,12 @@ let AppyMultiIndex = 0;
   * @param defaultLabel: string
   */
 
-const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
+const selectFactoryAdd = (multiple, props) => {
+    const options = props.options;
+    const onChange = props.onChange;
+    const defaultLabel = props.defaultLabel;
+    const defaultValue = props.defaultValue;
+
     if(!options.length) {
         options = [{ value: '', label: ''}];
     }
@@ -24,7 +29,7 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
         el.classList.add('selected');
     }
 
-    const removeOption = (el) => {
+    const unselectOption = (el) => {
         const value = el.innerText;
         const idx = AppySelectStore[key].indexOf(value);
         if (idx > -1) {
@@ -33,13 +38,13 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
         el.classList.remove('selected');
     }
 
-    const changeMultiSelection = (el) => {
+    const onMultiSelectChange = (el) => {
         const value = el.innerText;
         const idx = AppySelectStore[key].indexOf(value);
         if (idx == -1) {
             selectOption(el)
         } else {
-            removeOption(el);
+            unselectOption(el);
         }
         updateMultiContainer();
     }
@@ -49,7 +54,7 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
             .forEach(el => {
                 if(el.id !== 'selectAll') {
                     if(!select) {
-                        removeOption(el);
+                        unselectOption(el);
                     }
                     else selectOption(el);
                 } 
@@ -64,17 +69,20 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
         const sli = container.querySelector("#selectAll");
         if(options.length === selected.length) {
             sli.classList.add('selected');
+            container.value = undefined;
         } else {
-            sli.classList.remove('selected')
+            sli.classList.remove('selected');
+            container.value = selected;
         }
-
-        container.value = selected;
         if(!doNotDispatchChange) {
             container.dispatchEvent(new window.Event('change', { bubbles: true }));
         }
     }
 
-    const changeSingleSelections = (el) => {
+    const onSingleSelectChange = (el) => {
+        if(!el) {
+            el = dropdown.querySelector('li');
+        }
         const value = el.innerText;
         if (AppySelectStore[key].includes(value)) {
             AppySelectStore[key] = undefined;
@@ -100,9 +108,9 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
         li.addEventListener('click', (e) => {
             e.stopPropagation();
             if(multiple) {
-                changeMultiSelection(e.target)
+                onMultiSelectChange(e.target)
             }
-            else changeSingleSelections(e.target)
+            else onSingleSelectChange(e.target)
         });
         return li;
     }
@@ -131,7 +139,7 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
     const inner = document.createElement('div');
     inner.classList.add('multi__inner');
     inner.innerHTML = multiple ? `<span>${defaultLabel}<i></i></span>` : options[0].label;
-
+    
     const display = document.createElement('button');
     container.appendChild(display);
     display.appendChild(inner);
@@ -162,7 +170,9 @@ const selectFactoryAdd = (multiple, options, onChange, defaultLabel) => {
 
     container.appendChild(dropdown);
     dropdown.appendChild(list);
-    toggleSelectAll(true, true);
+    if (multiple) {
+        toggleSelectAll(true, true);
+    } 
     AppyMultiIndex ++;
     return container;
 };
@@ -184,10 +194,14 @@ if(parent) {
 }
 
 window.selectFactory = {
-    createMulti (options, onChange, defaultLabel) {
-        return selectFactoryAdd(true, options, onChange, defaultLabel);
+    // @TODO change custom record
+    createMulti (props) {
+        return selectFactoryAdd(true, props);
     },
-    createSingle (options, onChange, defaultLabel) {
-        return selectFactoryAdd(false, options, onChange, defaultLabel);
+    createSingle (props) {
+        return selectFactoryAdd(false, props);
+    },
+    create(multiple, props) {
+        return selectFactoryAdd(multiple, props)
     }
 };
