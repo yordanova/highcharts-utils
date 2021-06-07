@@ -6,6 +6,14 @@ const uniqueFilter = (item, idx, self) => self.indexOf(item) === idx;
         
 const fixFloat = (x) => Number.parseFloat(x.toFixed(2));
 
+const reduceToSum = (a, b) => (a + b);
+
+function average () {
+    const sum = Array.from(arguments)
+        .reduce(reduceToSum, 0);
+    return (sum / arguments.length) || 0;
+}
+
 const sortByPeriod = (a, b) => {
     const parse = (s) => {
         var [month, year] = s.split(' '); 
@@ -23,10 +31,10 @@ const sortByPeriod = (a, b) => {
     };
 }
 
-
 const Utils = {
     toNumber: toNumber,
     uniqueFilter: uniqueFilter,
     fixFloat: fixFloat,
     sortByPeriod: sortByPeriod,
+    average: average
 }

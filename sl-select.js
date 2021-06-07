@@ -12,13 +12,13 @@ let AppyMultiIndex = 0;
   */
 
 const selectFactoryAdd = (multiple, props) => {
-    const options = props.options;
+    let options = props.options;
     const onChange = props.onChange;
     const defaultLabel = props.defaultLabel;
     const defaultValue = props.defaultValue;
 
     if(!options.length) {
-        options = [{ value: '', label: ''}];
+        options = [{ value: ' ', label: ' '}];
     }
     const selectOption = (el) => {
         const value = el.innerText;
