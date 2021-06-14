@@ -31,6 +31,8 @@ const sortByPeriod = (a, b) => {
     };
 }
 
+const sortByParam  = (param, a, b) => a[param] > b[param] ? 1: -1;
+
 const Utils = {
     toNumber: toNumber,
     uniqueFilter: uniqueFilter,
