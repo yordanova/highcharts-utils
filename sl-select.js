@@ -12,11 +12,9 @@ let AppyMultiIndex = 0;
   */
 
 const selectFactoryAdd = (multiple, props) => {
-    let options = props.options
-        .sort((a, b) => sortByParam('label', a, b));
+    let options = props.options;
     const onChange = props.onChange;
     const defaultLabel = props.defaultLabel;
-    const defaultValue = props.defaultValue;
 
     if(!options.length) {
         options = [{ value: ' ', label: ' '}];
