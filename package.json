@@ -9,7 +9,7 @@
     "_minify": "npm run _minifyJs & npm run _minifyCss",
     "_minifyJs": "uglifyjs  common.js sl-select.js reverse-legend.js --compress --mangle --warn -o dist/highcharts-utils.min.js",
     "_minifyCss": "css-minify --dir ./ --output ./dist",
-    "_git": "git add . && git commit -m 'some-message' && git push --all && npm run gitDist",
+    "_git": "git add . && git commit -m 'some-message' && git push --all && npm run _gitDist",
     "_gitDist": "git subtree push --prefix dist origin gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
