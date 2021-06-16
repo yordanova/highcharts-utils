@@ -10,7 +10,7 @@
     "minifySelect": "uglifyjs sl-select.js --compress --mangle --warn --output dist/sl-select.min.js",
     "minifyLegend": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.min.js",
     "minifyCommon": "uglifyjs common.js --compress --mangle --warn --output dist/common.min.js",
-    "git": "git add . && git commit -m 'some-message' && git push --all",
+    "git": "git add . && git commit -m 'some-message' && git push --all && gitDist",
     "gitDist": "git subtree push --prefix dist origin gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
