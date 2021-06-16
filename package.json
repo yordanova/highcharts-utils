@@ -4,14 +4,13 @@
   "description": "",
   "main": "sl-select.js",
   "scripts": {
-    "publish": "npm run minify & npm run git",
+    "deploy": "npm run _minify & npm run _git",
     "start": "live-server --port=7001",
-    "minify": "npm run minifySelect & npm run minifyLegend & npm run minifyCommon",
-    "minifySelect": "uglifyjs sl-select.js --compress --mangle --warn --output dist/sl-select.min.js",
-    "minifyLegend": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.min.js",
-    "minifyCommon": "uglifyjs common.js --compress --mangle --warn --output dist/common.min.js",
-    "git": "git add . && git commit -m 'some-message' && git push --all && npm run gitDist",
-    "gitDist": "git subtree push --prefix dist origin gh-pages",
+    "_minify": "npm run _minifyJs & npm run _minifyCss",
+    "_minifyJs": "uglifyjs  common.js sl-select.js reverse-legend.js --compress --mangle --warn -o dist/highcharts-utils.min.js",
+    "_minifyCss": "css-minify --dir ./ --output ./dist",
+    "_git": "git add . && git commit -m 'some-message' && git push --all && npm run gitDist",
+    "_gitDist": "git subtree push --prefix dist origin gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +24,7 @@
   },
   "homepage": "https://github.com/yordanova/highcharts-utils#readme",
   "dependencies": {
+    "css-minify": "^1.1.0",
     "live-server": "^1.2.1",
     "uglify-js": "^3.13.8"
   }
