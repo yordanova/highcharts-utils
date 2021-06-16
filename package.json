@@ -6,15 +6,12 @@
   "scripts": {
     "publish": "npm run minify & npm run git",
     "start": "live-server --port=7001",
-    "minify": "npm run minify1 & npm run minify2 & npm run minify3",
-    "minify1": "uglifyjs sl-select.js --compress --mangle --warn --output dist/sl-select.min.js",
-    "minify2": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.min.js",
-    "minify3": "uglifyjs common.js --compress --mangle --warn --output dist/common.min.js",
+    "minify": "npm run minifySelect & npm run minifyLegend & npm run minifyCommon",
+    "minifySelect": "uglifyjs sl-select.js --compress --mangle --warn --output dist/sl-select.min.js",
+    "minifyLegend": "uglifyjs reverse-legend.js --compress --mangle --warn --output dist/reverse-legend.min.js",
+    "minifyCommon": "uglifyjs common.js --compress --mangle --warn --output dist/common.min.js",
     "git": "git add . && git commit -m 'some-message' && git push --all",
-    "gitA": "git add . && git commit -m && npm run gitpush",
-    "gitpush": "git push --all",
-    "production": "npm run version:bump --silent && rm -f scripts.min.js && npm run minifyJS --silent && npm run version:add --silent",
-    "version:bump": "npm version patch --no-git-tag-version --silent",
+    "gitDist": "git subtree push --prefix dist origin gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
