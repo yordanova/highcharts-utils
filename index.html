@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Three Way Match Chart, Appficiency</title>
+    <style>
+        * {
+            outline: 0;
+            font-family: sans-serif;
+        }
+        body {
+            background-color: #fafafa
+        }
+        span.msg {
+            color: #555;
+            padding: 5px 0 10px;
+            display: inherit
+        }
+        .container-header {
+            margin-bottom: 10px;
+        }
+        #container-dropdowns {
+            display: inline-block;
+        }
+        #container-dropdowns .multi {
+            width: 300px;
+            width: 300px;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .highcharts-axis-labels text {
+            color: #666666 !important;
+            fill: #666666 !important;
+            text-decoration: none !important;
+            font-size: 11px !important;
+            font-weight: normal !important;
+        }
+        .btn-drillup {
+            float: right;
+            display: none;
+            background: #fff;
+            border-radius: 2px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            color: #474747;
+            box-shadow: 0 0 2px rgb(204 204 204);
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            line-height: 1.5;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        .btn-drillup:hover {
+            background: #f7f7f7;
+        }
+        .highcharts-drillup-button {
+            display: none;
+        }
+    </style>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+
+
+ <!--    
+    <link href="../highcharts-utils/sl-select.css" rel="stylesheet" type="text/css" />
+    <script src="../highcharts-utils/common.js"></script>
+    <script src="../highcharts-utils/sl-select.js"></script>
+ -->   
+</head>
+
+<figure id="container-wrapper" class="highcharts-figure">
+    <div class="container-header">
+        <div id="container-dropdowns"></div>
+        <button class="btn-drillup" onclick="VAR_CHART.drillUp()">◁ Back</button>
+    </div>
+    <div id="container"></div>
+</figure>
+
+<script>
+    alert(123)
+</script>
+
+</html>
